@@ -1,6 +1,16 @@
+import { DonateForm } from './donate-form'
+
 export default class APP {
-  constructor () {}
+
+ #donateForm
+  constructor () {
+    this.#donateForm = new DonateForm()
+  }
+
   run () {
-    document.body.textContent='Helo world'
+    
+    const donateHTML = this.#donateForm.render()
+    console.log('donateForm=', this.#donateForm)
+    document.body.append(donateHTML)
   }
 }
