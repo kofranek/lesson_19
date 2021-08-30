@@ -1,8 +1,12 @@
-import {currencySymbol as curr}  from '../core/constants/settings'
+import { currencySymbol as curr } from '../core/constants/settings'
 export class DonateForm {
+  /************ Private attributes & methods *********************/
+
   #donateForm
+
+  /************Constructor **********************************/
   constructor (totalAmount, createNewDonate) {
-    this.createNewDonat = createNewDonate
+    this.createNewDonateItem = createNewDonate
     this.#donateForm = document.createElement('form')
     this.#donateForm.className = 'donate-form'
     this.totalAmount = totalAmount
@@ -11,15 +15,16 @@ export class DonateForm {
       const value = event.target.amount.value
       if (value > 0) {
         const newDonate = { amount: value, date: new Date() }
-        this.createNewDonat(newDonate)
+        this.createNewDonateItem(newDonate)
         event.target.amount.value = 0
       }
     })
   }
 
+  /******** Public methods **********************************/
+
   //update total amount
-  updateTotalAmount (newAmount, createNewDonate) {
-    this.createNewDonate = createNewDonate
+  updateTotalAmount (newAmount) {
     const totalAmount = newAmount + '$'
     const totalAmountHTML = document.querySelector('#total-amount')
     totalAmountHTML.textContent = totalAmount
@@ -37,7 +42,7 @@ export class DonateForm {
     input.setAttribute('required', '')
     const label = document.createElement('label')
     label.className = 'donate-form__input-label'
-    label.textContent = 'Введите сумму в '+curr
+    label.textContent = 'Введите сумму в ' + curr
     label.append(input)
     const h1 = document.createElement('h1')
     h1.id = 'total-amount'

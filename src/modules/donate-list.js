@@ -1,3 +1,5 @@
+import { getFormattedTime } from '../core/utils'
+
 export class DonateList {
   /************ Private attributes & methods *********************/
   #donatesContainer
@@ -30,16 +32,16 @@ export class DonateList {
     return this.#donatesContainer
   }
 
-  /************Constructor ********************************* */
+  /************Constructor **********************************/
   constructor (donates) {
     this.#donates = donates
     this.#donatesContainer = document.createElement('div')
     this.#donatesContainer.className = 'donates-container'
   }
 
-  /******** Public methods ***************************/
+  /******** Public methods **********************************/
 
-  //update donate list
+  //update rendered donate list
   updateDonates (donates) {
     const donatesContainerDonates = document.querySelector(
       '.donates-container__donates'
@@ -55,7 +57,9 @@ export class DonateList {
     const donateContainerDonate = document.querySelector(
       '.donates-container__donates'
     )
-    donateContainerDonate.append(this.#addItem(newDonate.amount, newDonate.date))
+    donateContainerDonate.append(
+      this.#addItem(newDonate.amount, newDonate.date)
+    )
   }
 
   //render donate list
@@ -70,8 +74,10 @@ export class DonateList {
 
   //convert date to string for redering date in donate list
   dateString (date) {
-    const dateText = `${date.getDate()}. ${date.getMonth() +
-      1}. ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+    const dateText = getFormattedTime(date)
+
+    //const dateText = `${date.getDate()}. ${date.getMonth() +
+    // 1}. ${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     return dateText
   }
 }
