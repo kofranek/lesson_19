@@ -1,28 +1,31 @@
 import { DonateForm } from './donate-form'
-import {DonateList} from './donate-list'
-
-const mockDonates = [
-  { amount: 4, date: new Date() },
-  { amount: 20, date: new Date() },
-  { amount: 3, date: new Date() },
-  { amount: 1, date: new Date() }
-]
-
+import { DonateList } from './donate-list'
 
 export default class APP {
+  #donateForm
+  #donateList
 
- #donateForm
- #donateList
   constructor () {
-    this.#donateForm = new DonateForm()
-    this.#donateList = new DonateList(mockDonates)
+    this.state = {
+      donates: [],
+      totalAmount: 0
+    }
+
+    this.#donateForm = new DonateForm(this.state.totalAmount,this.createNewDonate.bind(this))
+    this.#donateList = new DonateList(this.state.donates)
   }
 
-
-  run () { 
+  run () {
     const donateHTML = this.#donateForm.render()
     const donateList = this.#donateList.render()
-    //console.log('donateForm=', this.#donateForm)
-    document.body.append(donateHTML,donateList)
+    document.body.append(donateHTML, donateList)
   }
+
+  createNewDonate (newDonate) {
+    this.state.donates.push(newDonate)
+    this.state.totalAmount +=Number(newDonate.amount)
+    this.#donateList.addNewDonate(newDonate) //Я не вызываю метод updateDonates, потому что меняется только один элемент
+    this.#donateForm.updateTotalAmount(this.state.totalAmount)
+  }
+
 }
