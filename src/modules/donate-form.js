@@ -1,3 +1,4 @@
+import {currencySymbol as curr}  from '../core/constants/settings'
 export class DonateForm {
   #donateForm
   constructor (totalAmount, createNewDonate) {
@@ -36,11 +37,11 @@ export class DonateForm {
     input.setAttribute('required', '')
     const label = document.createElement('label')
     label.className = 'donate-form__input-label'
-    label.textContent = 'Введите сумму в $'
+    label.textContent = 'Введите сумму в '+curr
     label.append(input)
     const h1 = document.createElement('h1')
     h1.id = 'total-amount'
-    h1.textContent = this.totalAmount + '$'
+    h1.textContent = this.totalAmount + curr
     const button = document.createElement('button')
     button.className = 'donate-form__submit-button'
     button.setAttribute('type', 'submit')
